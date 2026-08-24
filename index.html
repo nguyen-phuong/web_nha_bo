@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sổ Thu Chi – Shop Quần Áo</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
   :root{
     --ink:#1E2A3A;
@@ -31,13 +31,15 @@
       radial-gradient(circle at 1px 1px, rgba(30,42,58,0.05) 1px, transparent 0);
     background-size: 18px 18px;
   }
-  .app{max-width:720px;margin:0 auto;padding:0 0 90px;}
+  html, body{height:100%;}
+  .app{max-width:720px;margin:0 auto;padding:0 0 24px; min-height:100vh; display:flex; flex-direction:column;}
 
   /* ---------- Sticky header + tabs (stay put while content scrolls) ---------- */
   .sticky-top{
     position:sticky; top:0; z-index:30;
     background:var(--paper);
-    max-width:720px; margin:0 auto;
+    width:100%; max-width:720px; margin:0 auto;
+    flex-shrink:0;
   }
 
   /* Laptop / wider screens: give the app a bit more breathing room */
@@ -53,12 +55,12 @@
     .sticky-top{max-width:1400px;}
     .grid-log{display:grid; grid-template-columns:420px 1fr; gap:18px; align-items:start;}
     .grid-log .card{margin-bottom:0;}
-    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
     .grid-2 .card{margin-bottom:0;}
     /* less wasted side margin now that the container itself is wider */
     .tabs{padding:0 8px 14px;}
     section.panel{padding:0 8px;}
-    .ticket{margin:0 8px 12px;}
+    .ticket{margin:14px 8px 12px;}
     header{padding:22px 12px 26px;}
   }
   @media (min-width:1600px){
@@ -74,40 +76,94 @@
   header{
     background:var(--ink);
     color:var(--paper-card);
-    padding:22px 20px 26px;
+    padding:26px 20px 20px;
     position:relative;
     overflow:hidden;
+    border-bottom:3px double var(--gold);
   }
-  header::after{
+  header::before{
     content:"";
-    position:absolute; left:0; right:0; bottom:-1px; height:14px;
-    background-image: radial-gradient(circle at 10px 0, var(--paper) 9px, transparent 10px);
-    background-size: 20px 14px;
-    background-repeat: repeat-x;
+    position:absolute; left:20px; right:20px; top:8px; height:1px;
+    background:rgba(232,213,174,0.35);
   }
   header .eyebrow{
     font-family:'IBM Plex Mono',monospace;
-    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--gold-soft); margin:0 0 4px;
+    font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold-soft); margin:0 0 6px;
   }
   header h1{
-    font-family:'Fraunces',serif; font-weight:700; font-size:26px; margin:0;
+    font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:30px;
+    margin:0; letter-spacing:.01em; color:#FBF8F2;
+  }
+  header .subtitle{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--gold-soft); margin:5px 0 0; opacity:.85;
   }
   .header-top{display:flex; justify-content:space-between; align-items:flex-end; gap:12px;}
   .live-clock{
-    font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:600;
-    color:var(--gold-soft); letter-spacing:1px; white-space:nowrap; padding-bottom:2px;
+    font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600;
+    color:var(--gold-soft); letter-spacing:1.5px; white-space:nowrap; padding-bottom:2px;
+    border-left:1px solid rgba(232,213,174,0.35); padding-left:14px;
+  }
+
+  /* ---------- Footer (mirrors the header, kept compact) ---------- */
+  .app-footer{
+    background:var(--ink); color:var(--paper-card);
+    text-align:center; padding:12px 20px 10px; margin-top:auto;
+    border-top:2px double var(--gold);
+    position:relative;
+  }
+  .app-footer-row{display:flex; align-items:baseline; justify-content:center; gap:10px; flex-wrap:wrap;}
+  .app-footer-title{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:15px;
+    color:#FBF8F2; letter-spacing:.01em;
+  }
+  .app-footer-tagline{
+    font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.25em; text-transform:uppercase;
+    color:var(--gold-soft); opacity:.8;
+  }
+  .app-footer-copyright{
+    font-family:'Inter',sans-serif; font-size:10px; color:rgba(251,248,242,0.4);
+    margin-top:7px;
   }
 
   /* ---------- Ticket summary card ---------- */
   .ticket{
     background:var(--paper-card);
-    margin:0 16px 12px;
+    margin:14px 16px 12px;
     border-radius:8px;
     box-shadow:0 4px 16px rgba(184,134,59,0.18);
-    padding:16px 18px 14px;
+    padding:10px 18px;
     position:relative;
     border:2px solid var(--gold);
+  }
+  .ticket-toggle{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:none; border:none; cursor:pointer; padding:6px 0; color:var(--ink);
+  }
+  .ticket-toggle .chevron{flex-shrink:0; color:var(--gold);}
+  .ticket-collapsed-summary{
+    display:flex; align-items:center; gap:7px; text-align:left; overflow:hidden; flex:1;
+  }
+  .ticket-collapsed-summary .collapsed-label{
+    font-family:'Fraunces',serif; font-weight:700; font-size:13.5px; color:var(--paper-card);
+    flex-shrink:0; margin-right:2px;
+  }
+  .ticket-collapsed-summary .pill{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:700;
+    padding:5px 10px; border-radius:20px; white-space:nowrap; flex-shrink:0;
+  }
+  .ticket-collapsed-summary .pill.thu{background:#2F7D4F; color:#fff;}
+  .ticket-collapsed-summary .pill.chi{background:#B54834; color:#fff;}
+  .ticket-collapsed-summary .pill.net{color:#fff;}
+  .ticket-collapsed-summary .pill.net.pos{background:var(--gold);}
+  .ticket-collapsed-summary .pill.net.neg{background:#7A2A1D; box-shadow:0 0 0 2px rgba(181,72,52,0.4);}
+  .ticket-toggle .chevron{color:var(--gold-soft);}
+  .ticket-full{padding-top:6px;}
+  .ticket.collapsed .ticket-full{display:none;}
+  .ticket.collapsed{
+    padding:8px 16px; background:var(--ink); border-color:var(--gold);
+    box-shadow:0 4px 16px rgba(0,0,0,0.25);
   }
   .ticket-block + .ticket-block{margin-top:2px;}
   .ticket-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
@@ -115,17 +171,32 @@
     font-family:'IBM Plex Mono',monospace; font-size:13px; border:1px solid var(--line);
     background:transparent; border-radius:4px; padding:4px 6px; color:var(--ink);
   }
-  .ticket-title{font-family:'Fraunces',serif; font-size:17px; font-weight:700; letter-spacing:.01em; color:var(--ink);}
-  .ticket-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:10px;}
-  .ticket-cell{text-align:center;padding:9px 4px;border-radius:6px;}
-  .ticket-cell .lbl{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:4px;}
-  .ticket-cell .val{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:17px;}
-  .ticket-cell.thu{background:var(--thu-bg);}
+  .ticket-title{
+    font-family:'Fraunces',serif; font-size:17px; font-weight:700; letter-spacing:.01em; color:var(--ink);
+    position:relative; padding-bottom:6px; display:inline-block;
+  }
+  .ticket-title::after{
+    content:""; position:absolute; left:0; bottom:0; width:36px; height:2px; background:var(--gold);
+  }
+  .ticket-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px;}
+  .ticket-cell{text-align:center;padding:11px 4px 9px;border-radius:6px; position:relative; border-top:3px solid transparent;}
+  .ticket-cell .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
+  .ticket-cell .val{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:16px; display:inline-flex; align-items:center; gap:4px;}
+  .ticket-cell.thu{background:var(--thu-bg); border-top-color:var(--thu);}
   .ticket-cell.thu .val{color:var(--thu);}
-  .ticket-cell.chi{background:var(--chi-bg);}
+  .ticket-cell.chi{background:var(--chi-bg); border-top-color:var(--chi);}
   .ticket-cell.chi .val{color:var(--chi);}
-  .ticket-cell.net .val{color:var(--ink);}
-  .ticket-dash{border-top:2px dashed var(--gold-soft); margin:12px 0;}
+  .ticket-cell.net{border-top-color:var(--gold);}
+  .ticket-cell.net.is-pos .val{color:var(--thu);}
+  .ticket-cell.net.is-neg .val{color:var(--chi);}
+  .trend-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:16px; height:16px; border-radius:50%; flex-shrink:0;
+  }
+  .trend-badge.up{background:var(--thu-bg); color:var(--thu);}
+  .trend-badge.down{background:var(--chi-bg); color:var(--chi);}
+  .ticket-cell.thu .trend-badge.up, .ticket-cell.chi .trend-badge.down{background:rgba(255,255,255,0.65);}
+  .ticket-dash{border-top:2px dashed var(--gold-soft); margin:14px 0;}
 
   /* ---------- Tabs ---------- */
   .tabs{
@@ -160,6 +231,11 @@
   }
   input:focus,select:focus,textarea:focus{outline:2px solid var(--gold); outline-offset:1px;}
   .field-warning{margin-top:5px; font-size:12px; color:#9C7A1E; font-weight:600;}
+  .sync-status{font-size:13px; font-weight:600; padding:8px 12px; border-radius:6px; display:inline-block;}
+  .sync-status.sync-offline{background:var(--paper); color:var(--ink-soft);}
+  .sync-status.sync-connecting{background:#FFF6E0; color:#9C7A1E;}
+  .sync-status.sync-ok{background:var(--thu-bg); color:var(--thu);}
+  .sync-status.sync-error{background:var(--chi-bg); color:var(--chi);}
 
   .type-toggle{display:flex; gap:8px;}
   .type-toggle button{
@@ -203,13 +279,15 @@
 
   /* ---------- Tables ---------- */
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
-  table{width:100%; border-collapse:collapse; font-size:13px;}
+  table{width:100%; border-collapse:collapse; font-size:13px; border:1px solid var(--line);}
   th{
     text-align:right; font-size:11px; text-transform:uppercase; letter-spacing:.04em;
     color:var(--ink-soft); padding:6px 6px; border-bottom:2px solid var(--line);
+    border-right:1px solid var(--line);
   }
+  th:last-child, td:last-child{border-right:none;}
   th:first-child, td:first-child{text-align:left;}
-  td{padding:8px 6px; border-bottom:1px solid var(--line); text-align:right; font-family:'IBM Plex Mono',monospace;}
+  td{padding:8px 6px; border-bottom:1px solid var(--line); border-right:1px solid var(--line); text-align:right; font-family:'IBM Plex Mono',monospace;}
   td:first-child{font-family:'Inter',sans-serif; font-weight:600;}
   tr.max-row td{background:var(--chi-bg);}
   tr.total-row td{font-weight:700; border-top:2px solid var(--ink); border-bottom:none;}
@@ -228,20 +306,26 @@
   .legend-item .dot.chi{background:var(--chi);}
   .legend-item.net{margin-top:4px; padding-top:8px; border-top:1px dashed var(--line); font-size:14px;}
 
+  /* Featured chart cards — gold top accent so charts stand out, boutique-consistent */
+  .card-chart{border-top:3px solid var(--gold);}
+
   /* ---------- Vertical column chart (Thu/Chi/Chênh lệch per month) ---------- */
-  .col-chart-legend{display:flex; gap:16px; margin-bottom:14px; font-size:12px; color:var(--ink-soft); flex-wrap:wrap;}
+  .col-chart-legend{display:flex; gap:16px; margin:2px 0 16px; font-size:12px; color:var(--ink-soft); flex-wrap:wrap;}
   .col-chart-legend .legend-item{display:flex; align-items:center; gap:5px; margin:0; padding:0; border:none; font-size:12px;}
-  .col-chart{display:flex; gap:14px; overflow-x:auto; padding:4px 2px 10px; align-items:flex-end;}
-  .col-month{display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0; padding:6px 8px 4px; border-radius:8px;}
-  .col-month.current{background:var(--gold-soft); box-shadow:0 0 0 2px var(--gold) inset;}
-  .col-bars{display:flex; align-items:flex-end; gap:5px;}
-  .col-bar-wrap{display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:168px; gap:4px;}
-  .col-bar-label{font-size:9px; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); white-space:nowrap;}
-  .col-bar{width:16px; border-radius:3px 3px 0 0; transition:height .2s;}
-  .col-bar.thu{background:var(--thu);}
-  .col-bar.chi{background:var(--chi);}
-  .col-bar.net{background:var(--gold);}
-  .col-month-label{font-size:11px; color:var(--ink-soft); font-weight:600; white-space:nowrap;}
+  .col-chart{display:flex; gap:22px; overflow-x:auto; padding:6px 4px 12px; align-items:flex-end;}
+  .col-month{
+    display:flex; flex-direction:column; align-items:center; gap:9px; flex-shrink:0;
+    padding:10px 12px 8px; border-radius:10px; background:var(--paper); border:1px solid var(--line);
+  }
+  .col-month.current{background:var(--gold-soft); border-color:var(--gold); box-shadow:0 0 0 2px var(--gold) inset;}
+  .col-bars{display:flex; align-items:flex-end; gap:8px; border-bottom:2px solid var(--ink); padding-bottom:0;}
+  .col-bar-wrap{display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:176px; gap:5px;}
+  .col-bar-label{font-size:9.5px; font-weight:700; font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); white-space:nowrap;}
+  .col-bar{width:20px; border-radius:4px 4px 0 0; transition:height .2s; box-shadow:inset 0 -6px 8px rgba(0,0,0,0.08);}
+  .col-bar.thu{background:linear-gradient(180deg,#3F9668,var(--thu));}
+  .col-bar.chi{background:linear-gradient(180deg,#C86A52,var(--chi));}
+  .col-bar.net{background:linear-gradient(180deg,#CBA057,var(--gold));}
+  .col-month-label{font-size:11.5px; color:var(--ink); font-weight:700; white-space:nowrap;}
   .legend-item .dot.net{background:var(--gold);}
   .bar-label{width:64px; flex-shrink:0; color:var(--ink-soft);}
   .bar-track{flex:1; background:var(--paper); border-radius:4px; overflow:hidden; height:16px; display:flex;}
@@ -256,6 +340,11 @@
     border-radius:16px; padding:5px 6px 5px 12px; font-size:13px;
   }
   .chip button{border:none;background:transparent;cursor:pointer;color:var(--ink-soft);font-size:14px;line-height:1;padding:2px 4px;}
+  .chip-toggle{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px; padding:6px 14px;
+    border-radius:16px; border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); cursor:pointer;
+  }
+  .chip-toggle.active{background:var(--ink); border-color:var(--ink); color:#fff;}
   .add-row{display:flex; gap:8px;}
   .add-row input{flex:1;}
 
@@ -341,6 +430,25 @@
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyB5wsUqGkY_Dkbuw_ISQSywI5uQDPUH46o",
+  authDomain: "webnhabo.firebaseapp.com",
+  projectId: "webnhabo",
+  storageBucket: "webnhabo.firebasestorage.app",
+  messagingSenderId: "705897025706",
+  appId: "1:705897025706:web:260203114a1a8ebe5f40d3"
+};
+let db = null;
+try{
+  if(typeof firebase !== 'undefined'){
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+  }
+}catch(e){ console.warn('Firebase init failed, app will run in local-only mode.', e); }
+</script>
 <script>
 const money = n => (n||0).toLocaleString('vi-VN') + ' ₫';
 const todayISO = () => new Date().toISOString().slice(0,10);
@@ -387,6 +495,16 @@ function deepClone(obj){
 let state = null;
 let activeTab = 'overview';
 let editingId = null;
+let ticketCollapsed = (()=>{
+  const saved = localStorage.getItem('ticket-collapsed');
+  if(saved !== null) return saved === '1';
+  return window.innerWidth < 700; // auto-collapsed by default on phones
+})();
+function toggleTicket(){
+  ticketCollapsed = !ticketCollapsed;
+  localStorage.setItem('ticket-collapsed', ticketCollapsed ? '1' : '0');
+  render();
+}
 const STORAGE_KEY = 'cashflow-data-shop-quanao';
 
 // Works two ways: window.storage when viewed inside Claude.ai, and the
@@ -423,6 +541,171 @@ async function loadState(){
   }
   if(!state || !state.transactions) state = deepClone(DEFAULT_STATE);
   render();
+  initCloudSync();
+}
+
+// ---------------------------------------------------------------- CLOUD SYNC (Firestore)
+// Lets multiple devices share the same data by entering the same "Mã cửa
+// hàng" (shop code). We keep localStorage as the always-on offline cache,
+// and mirror it to a Firestore document when a shop code is set, with a
+// realtime listener so other devices' changes show up automatically.
+const SHOP_CODE_KEY = 'cashflow-shop-code';
+let shopCode = (localStorage.getItem(SHOP_CODE_KEY) || '').trim();
+let cloudUnsubscribe = null;
+let lastWrittenAt = 0;   // updatedAt we last pushed ourselves, to ignore our own echo
+let cloudStatus = shopCode ? 'connecting' : 'offline'; // 'offline' | 'connecting' | 'synced' | 'error'
+
+function sanitizeShopCode(code){
+  return String(code||'').trim().toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,40);
+}
+
+function initCloudSync(){
+  if(shopCode && db){
+    startCloudListener(shopCode);
+  }
+}
+
+function startCloudListener(code){
+  if(!db) return;
+  if(cloudUnsubscribe) { cloudUnsubscribe(); cloudUnsubscribe = null; }
+  cloudStatus = 'connecting';
+  updateSyncStatusUI();
+  try{
+    cloudUnsubscribe = db.collection('shops').doc(code).onSnapshot(
+      (doc)=>{
+        cloudStatus = 'synced';
+        if(doc.exists){
+          const remote = doc.data();
+          const remoteUpdatedAt = remote.updatedAt || 0;
+          // Ignore the echo of our own most recent write, and ignore stale data
+          if(remoteUpdatedAt > lastWrittenAt && remoteUpdatedAt !== (state.updatedAt||0)){
+            try{
+              const remoteState = JSON.parse(remote.payload);
+              if(remoteState && remoteState.transactions){
+                state = remoteState;
+                storageSetRaw(JSON.stringify(state)); // keep local cache in sync too
+                render();
+                showToast('Đã đồng bộ dữ liệu mới từ thiết bị khác');
+              }
+            }catch(e){ /* ignore malformed remote payload */ }
+          }
+        }
+        updateSyncStatusUI();
+      },
+      (err)=>{
+        console.warn('Firestore listener error', err);
+        cloudStatus = 'error';
+        updateSyncStatusUI();
+      }
+    );
+  }catch(e){
+    cloudStatus = 'error';
+    updateSyncStatusUI();
+  }
+}
+
+function pushStateToCloud(){
+  if(!shopCode || !db) return;
+  const updatedAt = Date.now();
+  state.updatedAt = updatedAt;
+  lastWrittenAt = updatedAt;
+  db.collection('shops').doc(shopCode).set({
+    updatedAt,
+    payload: JSON.stringify(state)
+  }).catch(e=>{
+    console.warn('Cloud sync failed', e);
+    cloudStatus = 'error';
+    updateSyncStatusUI();
+  });
+}
+
+function updateSyncStatusUI(){
+  const el = document.getElementById('sync-status');
+  if(!el) return;
+  const map = {
+    offline: {text:'Chưa đồng bộ — dữ liệu chỉ lưu trên máy này', cls:'sync-offline'},
+    connecting: {text:'Đang kết nối...', cls:'sync-connecting'},
+    synced: {text:`Đã kết nối — mã "${shopCode}", tự đồng bộ`, cls:'sync-ok'},
+    error: {text:'Lỗi kết nối đồng bộ — dữ liệu vẫn an toàn trên máy này', cls:'sync-error'}
+  };
+  const s = map[cloudStatus] || map.offline;
+  el.textContent = s.text;
+  el.className = 'sync-status ' + s.cls;
+}
+
+async function connectShopCode(rawCode){
+  const code = sanitizeShopCode(rawCode);
+  if(!code){
+    alert('Mã cửa hàng chỉ gồm chữ, số, gạch ngang/gạch dưới, không được để trống.');
+    return;
+  }
+  if(!db){
+    alert('Không kết nối được tới máy chủ đồng bộ. Kiểm tra kết nối mạng rồi thử lại.');
+    return;
+  }
+  try{
+    const docSnap = await db.collection('shops').doc(code).get();
+    if(docSnap.exists && docSnap.data().payload){
+      let remoteState;
+      try{ remoteState = JSON.parse(docSnap.data().payload); }catch(e){ remoteState = null; }
+      const remoteCount = remoteState && remoteState.transactions ? remoteState.transactions.length : 0;
+      const localCount = state.transactions.length;
+      openSyncConflictModal(code, remoteState, remoteCount, localCount);
+    } else {
+      // nothing on the cloud yet under this code — just claim it with local data
+      finishConnect(code, 'local');
+    }
+  }catch(e){
+    alert('Không kiểm tra được mã này. Kiểm tra kết nối mạng rồi thử lại.');
+  }
+}
+
+function finishConnect(code, choice, remoteState){
+  shopCode = code;
+  localStorage.setItem(SHOP_CODE_KEY, code);
+  if(choice === 'remote' && remoteState){
+    state = remoteState;
+  }
+  saveState(); // persists locally, and (since shopCode is now set) pushes to cloud too
+  startCloudListener(code);
+  render();
+  showToast(`Đã kết nối mã cửa hàng "${code}"`);
+}
+
+function disconnectShopCode(){
+  if(cloudUnsubscribe){ cloudUnsubscribe(); cloudUnsubscribe = null; }
+  shopCode = '';
+  localStorage.removeItem(SHOP_CODE_KEY);
+  cloudStatus = 'offline';
+  render();
+  showToast('Đã ngắt đồng bộ — dữ liệu vẫn còn trên máy này');
+}
+
+function openSyncConflictModal(code, remoteState, remoteCount, localCount){
+  const overlay = document.createElement('div');
+  overlay.className = 'cal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h2 style="margin-top:0;">Mã "${escapeHtml(code)}" đã có dữ liệu trên đám mây</h2>
+      <p class="muted">Máy này đang có <strong>${localCount}</strong> giao dịch. Trên đám mây (mã này) đang có <strong>${remoteCount}</strong> giao dịch. Chọn dữ liệu muốn giữ:</p>
+      <div style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+        <button type="button" class="btn-secondary" id="sync-use-remote" style="text-align:left; padding:12px;">
+          <strong>Dùng dữ liệu trên đám mây</strong><br><span class="muted">Thay dữ liệu trên máy này bằng ${remoteCount} giao dịch từ đám mây.</span>
+        </button>
+        <button type="button" class="btn-secondary" id="sync-use-local" style="text-align:left; padding:12px;">
+          <strong>Dùng dữ liệu trên máy này</strong><br><span class="muted">Ghi đè lên đám mây bằng ${localCount} giao dịch đang có ở đây.</span>
+        </button>
+      </div>
+      <div class="cal-footer">
+        <button type="button" class="btn-secondary" id="sync-cancel">Huỷ</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.remove(); });
+  document.getElementById('sync-cancel').onclick = ()=> overlay.remove();
+  document.getElementById('sync-use-remote').onclick = ()=>{ overlay.remove(); finishConnect(code, 'remote', remoteState); };
+  document.getElementById('sync-use-local').onclick = ()=>{ overlay.remove(); finishConnect(code, 'local'); };
 }
 
 // ---------------------------------------------------------------- EXCEL EXPORT/IMPORT
@@ -832,6 +1115,7 @@ function saveState(){
     }catch(e){
       showToast('Không lưu được dữ liệu — hãy dùng nút "Xuất dữ liệu" để sao lưu thủ công');
     }
+    if(shopCode) pushStateToCloud();
   }, 150);
 }
 
@@ -902,32 +1186,24 @@ function render(){
           <div>
             <p class="eyebrow">Sổ tay tính tiền · ${formatFullDateVN(now)}</p>
             <h1>Bo's Vibe</h1>
+            <p class="subtitle">Boutique Thời Trang</p>
           </div>
           <div class="live-clock" id="live-clock">${formatTimeVN(now)}</div>
         </div>
       </header>
 
-      <div class="ticket">
-        <div class="ticket-block">
-          <div class="ticket-row">
-            <span class="ticket-title">Tháng này</span>
-          </div>
-          <div class="ticket-grid">
-            <div class="ticket-cell thu"><div class="lbl">Thu</div><div class="val">${money(ct.thu)}</div></div>
-            <div class="ticket-cell chi"><div class="lbl">Chi</div><div class="val">${money(ct.chi)}</div></div>
-            <div class="ticket-cell net"><div class="lbl">Chênh lệch</div><div class="val">${ct.net<0?'-':''}${money(Math.abs(ct.net))}</div></div>
-          </div>
-        </div>
-        <div class="ticket-dash"></div>
-        <div class="ticket-block">
-          <div class="ticket-row">
-            <span class="ticket-title">Cả năm ${now.getFullYear()}</span>
-          </div>
-          <div class="ticket-grid">
-            <div class="ticket-cell thu"><div class="lbl">Thu</div><div class="val">${money(cy.thu)}</div></div>
-            <div class="ticket-cell chi"><div class="lbl">Chi</div><div class="val">${money(cy.chi)}</div></div>
-            <div class="ticket-cell net"><div class="lbl">Chênh lệch</div><div class="val">${cy.net<0?'-':''}${money(Math.abs(cy.net))}</div></div>
-          </div>
+      <div class="ticket ${ticketCollapsed?'collapsed':''}">
+        <button type="button" class="ticket-toggle" id="ticket-toggle" title="${ticketCollapsed?'Mở rộng':'Thu gọn'}">
+          ${ticketCollapsed
+            ? `<span class="ticket-collapsed-summary"><span class="collapsed-label">Tháng này</span><span class="pill thu">Thu ${abbrevMillions(ct.thu)}</span><span class="pill chi">Chi ${abbrevMillions(ct.chi)}</span><span class="pill net ${ct.net<0?'neg':'pos'}">${ct.net<0?'-':'+'}${abbrevMillions(Math.abs(ct.net))}</span></span>`
+            : `<span class="ticket-collapsed-summary" style="visibility:hidden;">.</span>`
+          }
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="${ticketCollapsed?'M6 9l6 6 6-6':'M18 15l-6-6-6 6'}"/></svg>
+        </button>
+        <div class="ticket-full">
+          ${renderTicketBlock('Tháng này', ct.thu, ct.chi, ct.net)}
+          <div class="ticket-dash"></div>
+          ${renderTicketBlock(`Cả năm ${now.getFullYear()}`, cy.thu, cy.chi, cy.net)}
         </div>
       </div>
 
@@ -945,7 +1221,17 @@ function render(){
     <section class="panel ${activeTab==='summary'?'active':''}" id="panel-summary"></section>
     <section class="panel ${activeTab==='suppliers'?'active':''}" id="panel-suppliers"></section>
     <section class="panel ${activeTab==='categories'?'active':''}" id="panel-categories"></section>
+
+    <footer class="app-footer">
+      <div class="app-footer-row">
+        <span class="app-footer-title">Bo's Vibe</span>
+        <span class="app-footer-tagline">· Boutique Thời Trang</span>
+      </div>
+      <div class="app-footer-copyright">© ${now.getFullYear()} · Sổ tay tính tiền</div>
+    </footer>
   `;
+
+  document.getElementById('ticket-toggle').onclick = toggleTicket;
 
   document.querySelectorAll('.tab-btn').forEach(b=>{
     b.addEventListener('click', ()=>{ activeTab = b.dataset.tab; editingId=null; render(); });
@@ -1264,6 +1550,33 @@ function icon(name){
   if(name==='trash') return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/></svg>`;
   return '';
 }
+function trendIcon(direction){
+  const d = direction==='up' ? 'M6 15l6-6 6 6' : 'M6 9l6 6 6-6';
+  return `<svg class="trend-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+}
+function renderTicketBlock(title, thu, chi, net){
+  return `
+    <div class="ticket-block">
+      <div class="ticket-row">
+        <span class="ticket-title">${title}</span>
+      </div>
+      <div class="ticket-grid">
+        <div class="ticket-cell thu">
+          <div class="lbl">Thu</div>
+          <div class="val">${money(thu)} <span class="trend-badge up">${trendIcon('up')}</span></div>
+        </div>
+        <div class="ticket-cell chi">
+          <div class="lbl">Chi</div>
+          <div class="val">${money(chi)} <span class="trend-badge down">${trendIcon('down')}</span></div>
+        </div>
+        <div class="ticket-cell net ${net<0?'is-neg':'is-pos'}">
+          <div class="lbl">Chênh lệch</div>
+          <div class="val">${net<0?'-':''}${money(Math.abs(net))} <span class="trend-badge ${net<0?'down':'up'}">${trendIcon(net<0?'down':'up')}</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 // ---------------------------------------------------------------- SUMMARY TAB
 // ---------------------------------------------------------------- OVERVIEW TAB (charts)
@@ -1312,7 +1625,7 @@ function renderDonutCard(title, thu, chi){
   const total = thu + chi;
   const net = thu - chi;
   return `
-    <div class="card">
+    <div class="card card-chart">
       <h2>${title}</h2>
       <div class="donut-row">
         ${renderDonutSVG(thu, chi)}
@@ -1375,11 +1688,11 @@ function renderOverview(){
 
   panel.innerHTML = `
     <div class="grid-2">
-      ${renderDonutCard(`Tỉ lệ Thu/Chi tháng ${curMonth}/${year}`, ct.thu, ct.chi)}
       ${renderDonutCard(`Tỉ lệ Thu/Chi cả năm ${year}`, cy.thu, cy.chi)}
+      ${renderDonutCard(`Tỉ lệ Thu/Chi tháng ${curMonth}/${year}`, ct.thu, ct.chi)}
     </div>
 
-    <div class="card">
+    <div class="card card-chart" style="margin-top:6px;">
       <h2>Biểu đồ Thu/Chi/Chênh lệch theo tháng — ${year}</h2>
       <p class="muted" style="margin-top:0;">Tháng hiện tại (Th${curMonth}) được tô nổi bật. Đơn vị: triệu đồng (tr).</p>
       <div class="col-chart-legend">
@@ -1396,6 +1709,7 @@ function renderSummary(){
   const panel = document.getElementById('panel-summary');
   const years = allYears();
   const selectedYear = Number(panel.dataset.year || years[0]);
+  const selectedMonth = panel.dataset.month || 'all';
 
   const months = Array.from({length:12}, (_,i)=>i+1);
   let cum = 0;
@@ -1423,25 +1737,41 @@ function renderSummary(){
     return {y, thu, chi, net:thu-chi};
   });
 
+  let compareSelected = panel.dataset.compareYears ? panel.dataset.compareYears.split(',').filter(Boolean) : years.map(String);
+
   panel.innerHTML = `
     ${years.length>1 ? `
     <div class="card">
       <h2>So sánh nhiều năm</h2>
+      <div class="chip-list" id="compare-year-chips">
+        <button type="button" class="chip-toggle ${compareSelected.length===years.length?'active':''}" data-year="all">Tất cả</button>
+        ${years.map(y=>`<button type="button" class="chip-toggle ${compareSelected.includes(String(y))?'active':''}" data-year="${y}">${y}</button>`).join('')}
+      </div>
       <table>
         <thead><tr><th>Năm</th><th>Tổng Thu</th><th>Tổng Chi</th><th>Lợi nhuận</th></tr></thead>
         <tbody>
-          ${yearlyOverview.map(r=>`<tr><td>${r.y}</td><td>${money(r.thu)}</td><td>${money(r.chi)}</td><td style="color:${r.net<0?'var(--chi)':'var(--thu)'}">${r.net<0?'-':''}${money(Math.abs(r.net))}</td></tr>`).join('')}
+          ${yearlyOverview.filter(r=>compareSelected.includes(String(r.y))).map(r=>`<tr><td>${r.y}</td><td>${money(r.thu)}</td><td>${money(r.chi)}</td><td style="color:${r.net<0?'var(--chi)':'var(--thu)'}">${r.net<0?'-':''}${money(Math.abs(r.net))}</td></tr>`).join('')}
+          ${compareSelected.length===0 ? `<tr><td colspan="4" class="muted" style="text-align:center;">Chưa chọn năm nào để so sánh</td></tr>` : ''}
         </tbody>
       </table>
     </div>` : ''}
 
     <div class="card">
       <h2>Chi tiết theo tháng</h2>
-      <div class="ticket-row" style="margin-bottom:10px;">
-        <label style="margin:0;">Năm</label>
-        <select id="year-select">${years.map(y=>`<option ${y===selectedYear?'selected':''}>${y}</option>`).join('')}</select>
+      <div class="ticket-row" style="margin-bottom:10px; flex-wrap:wrap; gap:24px; justify-content:flex-start;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="margin:0;">Năm</label>
+          <select id="year-select">${years.map(y=>`<option ${y===selectedYear?'selected':''}>${y}</option>`).join('')}</select>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="margin:0;">Tháng</label>
+          <select id="month-select">
+            <option value="all" ${selectedMonth==='all'?'selected':''}>Tất cả các tháng</option>
+            ${VI_MONTHS.map((m,i)=>`<option value="${i+1}" ${String(i+1)===String(selectedMonth)?'selected':''}>${m}</option>`).join('')}
+          </select>
+        </div>
       </div>
-      ${rows.map(r=>`
+      ${rows.filter(r=> selectedMonth==='all' || String(r.m)===String(selectedMonth)).map(r=>`
         <div class="bar-row">
           <div class="bar-label">Tháng ${r.m}</div>
           <div class="bar-track"><div class="bar-fill thu" style="width:${(r.thu/maxVal*100).toFixed(1)}%"></div></div>
@@ -1467,6 +1797,25 @@ function renderSummary(){
     </div>
   `;
   document.getElementById('year-select').onchange = (e)=>{ panel.dataset.year = e.target.value; renderSummary(); };
+  document.getElementById('month-select').onchange = (e)=>{ panel.dataset.month = e.target.value; renderSummary(); };
+
+  const compareChips = document.getElementById('compare-year-chips');
+  if(compareChips){
+    compareChips.querySelectorAll('.chip-toggle').forEach(btn=>{
+      btn.onclick = ()=>{
+        const y = btn.dataset.year;
+        if(y==='all'){
+          compareSelected = years.map(String);
+        }else if(compareSelected.includes(y)){
+          compareSelected = compareSelected.filter(v=>v!==y);
+        }else{
+          compareSelected = compareSelected.concat([y]);
+        }
+        panel.dataset.compareYears = compareSelected.join(',');
+        renderSummary();
+      };
+    });
+  }
 }
 
 // ---------------------------------------------------------------- SUPPLIERS TAB
@@ -1474,10 +1823,17 @@ function renderSuppliers(){
   const panel = document.getElementById('panel-suppliers');
   const years = ['Tất cả năm', ...allYears()];
   const selectedYear = panel.dataset.year || 'Tất cả năm';
+  const selectedMonth = panel.dataset.month || 'all';
+
+  const matchesFilter = (t) => {
+    const my = monthYear(t.date);
+    const yearOk = selectedYear==='Tất cả năm' || my.y===Number(selectedYear);
+    const monthOk = selectedMonth==='all' || my.m===Number(selectedMonth);
+    return yearOk && monthOk;
+  };
 
   const data = state.suppliers.map(s=>{
-    const txns = state.transactions.filter(t=>t.type==='Chi' && t.supplier===s &&
-      (selectedYear==='Tất cả năm' || monthYear(t.date).y===Number(selectedYear)));
+    const txns = state.transactions.filter(t=>t.type==='Chi' && t.supplier===s && matchesFilter(t));
     const total = txns.reduce((sum,t)=>sum+Number(t.amount),0);
     const count = txns.length;
     const last = txns.length? txns.map(t=>t.date).sort().slice(-1)[0] : null;
@@ -1492,9 +1848,18 @@ function renderSuppliers(){
   panel.innerHTML = `
     <div class="card">
       <h2>Chi theo nhà cung cấp</h2>
-      <div class="ticket-row" style="margin-bottom:10px;">
-        <label style="margin:0;">Năm</label>
-        <select id="ncc-year">${years.map(y=>`<option ${String(y)===String(selectedYear)?'selected':''}>${y}</option>`).join('')}</select>
+      <div class="ticket-row" style="margin-bottom:14px; flex-wrap:wrap; gap:24px; justify-content:flex-start;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="margin:0;">Năm</label>
+          <select id="ncc-year">${years.map(y=>`<option ${String(y)===String(selectedYear)?'selected':''}>${y}</option>`).join('')}</select>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="margin:0;">Tháng</label>
+          <select id="ncc-month">
+            <option value="all" ${selectedMonth==='all'?'selected':''}>Tất cả các tháng</option>
+            ${VI_MONTHS.map((m,i)=>`<option value="${i+1}" ${String(i+1)===String(selectedMonth)?'selected':''}>${m}</option>`).join('')}
+          </select>
+        </div>
       </div>
       ${data.map(d=>`
         <div class="bar-row">
@@ -1529,12 +1894,30 @@ function renderSuppliers(){
     </div>
   `;
   document.getElementById('ncc-year').onchange = (e)=>{ panel.dataset.year = e.target.value; renderSuppliers(); };
+  document.getElementById('ncc-month').onchange = (e)=>{ panel.dataset.month = e.target.value; renderSuppliers(); };
 }
 
 // ---------------------------------------------------------------- CATEGORIES TAB
 function renderCategories(){
   const panel = document.getElementById('panel-categories');
   panel.innerHTML = `
+    <div class="card">
+      <h2>Đồng bộ nhiều thiết bị</h2>
+      <p class="muted" style="margin-top:0;">Nhập cùng 1 "Mã cửa hàng" trên điện thoại, laptop... để tất cả tự dùng chung 1 dữ liệu, cập nhật ngay khi có thay đổi.</p>
+      <div id="sync-status" class="sync-status">Đang kiểm tra...</div>
+      ${shopCode ? `
+        <div class="add-row" style="margin-top:10px;">
+          <input type="text" value="${escapeHtml(shopCode)}" disabled style="background:var(--paper); color:var(--ink-soft);">
+          <button class="btn-secondary" id="sync-disconnect" style="color:var(--chi);border-color:var(--chi);">Ngắt kết nối</button>
+        </div>
+      ` : `
+        <div class="add-row" style="margin-top:10px;">
+          <input type="text" id="sync-code-input" placeholder="VD: boshop2026">
+          <button class="btn-secondary" id="sync-connect">Kết nối</button>
+        </div>
+      `}
+    </div>
+
     <div class="card">
       <h2>Danh mục Thu</h2>
       <div class="chip-list" id="chips-thu"></div>
@@ -1579,6 +1962,20 @@ function renderCategories(){
       <button class="btn-secondary" id="reset-data" style="color:var(--chi);border-color:var(--chi);">Xoá toàn bộ dữ liệu</button>
     </div>
   `;
+
+  updateSyncStatusUI();
+  const connectBtn = document.getElementById('sync-connect');
+  if(connectBtn){
+    connectBtn.onclick = ()=> connectShopCode(document.getElementById('sync-code-input').value);
+  }
+  const disconnectBtn = document.getElementById('sync-disconnect');
+  if(disconnectBtn){
+    disconnectBtn.onclick = ()=>{
+      if(confirm('Ngắt đồng bộ? Thiết bị này sẽ không tự cập nhật dữ liệu từ nơi khác nữa (dữ liệu hiện tại vẫn giữ nguyên trên máy này).')){
+        disconnectShopCode();
+      }
+    };
+  }
 
   const renderChips = (key, listArr, containerId) => {
     const c = document.getElementById(containerId);
