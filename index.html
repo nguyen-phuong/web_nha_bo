@@ -31,7 +31,7 @@
       radial-gradient(circle at 1px 1px, rgba(30,42,58,0.05) 1px, transparent 0);
     background-size: 18px 18px;
   }
-  html, body{height:100%;}
+  html, body{height:100%; overflow-x:hidden;}
   .app{max-width:720px;margin:0 auto;padding:0 0 24px; min-height:100vh; display:flex; flex-direction:column;}
 
   /* ---------- Sticky header + tabs (stay put while content scrolls) ---------- */
@@ -1747,6 +1747,7 @@ function renderSummary(){
         <button type="button" class="chip-toggle ${compareSelected.length===years.length?'active':''}" data-year="all">Tất cả</button>
         ${years.map(y=>`<button type="button" class="chip-toggle ${compareSelected.includes(String(y))?'active':''}" data-year="${y}">${y}</button>`).join('')}
       </div>
+      <div class="table-scroll">
       <table>
         <thead><tr><th>Năm</th><th>Tổng Thu</th><th>Tổng Chi</th><th>Lợi nhuận</th></tr></thead>
         <tbody>
@@ -1754,6 +1755,7 @@ function renderSummary(){
           ${compareSelected.length===0 ? `<tr><td colspan="4" class="muted" style="text-align:center;">Chưa chọn năm nào để so sánh</td></tr>` : ''}
         </tbody>
       </table>
+      </div>
     </div>` : ''}
 
     <div class="card">
@@ -1787,6 +1789,7 @@ function renderSummary(){
 
     <div class="card">
       <h2>Bảng chi tiết ${selectedYear}</h2>
+      <div class="table-scroll">
       <table>
         <thead><tr><th>Tháng</th><th>Thu</th><th>Chi</th><th>Chênh lệch</th><th>Lũy kế</th></tr></thead>
         <tbody>
@@ -1794,6 +1797,7 @@ function renderSummary(){
           <tr class="total-row"><td>Tổng cả năm</td><td>${money(totalThu)}</td><td>${money(totalChi)}</td><td>${(totalThu-totalChi)<0?'-':''}${money(Math.abs(totalThu-totalChi))}</td><td>${cum<0?'-':''}${money(Math.abs(cum))}</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
   `;
   document.getElementById('year-select').onchange = (e)=>{ panel.dataset.year = e.target.value; renderSummary(); };
