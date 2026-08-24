@@ -68,8 +68,17 @@
     .sticky-top{max-width:1600px;}
   }
   /* Small phones: tighten side padding a touch */
+  @media (max-width:480px){
+    .ticket-grid{gap:6px;}
+    .ticket-cell{padding:9px 3px 7px;}
+    .ticket-cell .val{font-size:13.5px; gap:2px;}
+    .ticket-cell .lbl{font-size:10px;}
+    .trend-badge{width:14px; height:14px;}
+    .trend-badge svg{width:10px; height:10px;}
+  }
   @media (max-width:380px){
     .card{padding:14px;}
+    .ticket-cell .trend-badge{display:none;}
   }
 
   /* ---------- Header ---------- */
@@ -179,7 +188,7 @@
     content:""; position:absolute; left:0; bottom:0; width:36px; height:2px; background:var(--gold);
   }
   .ticket-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:14px;}
-  .ticket-cell{text-align:center;padding:11px 4px 9px;border-radius:6px; position:relative; border-top:3px solid transparent;}
+  .ticket-cell{text-align:center;padding:11px 4px 9px;border-radius:6px; position:relative; border-top:3px solid transparent; min-width:0; overflow:hidden;}
   .ticket-cell .lbl{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px;}
   .ticket-cell .val{font-family:'IBM Plex Mono',monospace;font-weight:800;font-size:16px; display:inline-flex; align-items:center; gap:4px;}
   .ticket-cell.thu{background:var(--thu-bg); border-top-color:var(--thu);}
